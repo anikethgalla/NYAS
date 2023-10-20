@@ -2,7 +2,7 @@ import streamlit as st
 
 # Define the external link
 url_resources = "https://congnixresources.streamlit.app/"
-
+url_notes = "https://congnixnotes.streamlit.app/"
 # Create the Streamlit web app
 st.set_page_config(
     page_title="Simple Website",
@@ -13,8 +13,9 @@ st.set_page_config(
 # Add content to the website
 st.title("Cognix")
 
-
+st.sidebar.title('Dashboard')
 st.sidebar.link_button("Student resources", url_resources)
+st.sidebar.link_button("Notes", url_notes)
 
 
 # Add more content as needed
