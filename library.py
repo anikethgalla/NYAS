@@ -1,19 +1,32 @@
 import streamlit as st
-from googlesearch import search
+import requests
 
 def search_book(book_name):
-    query = f"{book_name} book"
-    num_results = 10  # You can adjust the number of search results to fetch
+    base_url = "http://openlibrary.org/search.json"
+    params = {
+        "title": book_name
+    }
 
     try:
-        search_results = list(search(query, num_results=num_results))
-        
-        if not search_results:
-            st.error(f"No results found for '{book_name}' book.")
+        response = requests.get(base_url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            if 'docs' in data:
+                books = data['docs']
+                st.success(f"Found {len(books)} results for '{book_name}' book:")
+                for i, book in enumerate(books, start=1):
+                    title = book.get('title', 'Title not available')
+                    author = book.get('author_name', ['Author not available'])[0]
+                    cover = book.get('cover_i', '')
+                    if cover:
+                        cover_url = f"http://covers.openlibrary.org/b/id/{cover}-L.jpg"
+                        st.image(cover_url, caption=f"Result {i}: Cover Image for '{title}'")
+                    st.write(f"Result {i}: Title: {title}, Author: {author}")
+                    st.write(f"Result {i}: Link: [Open Library Link](https://openlibrary.org/{book.get('key', '')})")
+            else:
+                st.error(f"No results found for '{book_name}' book.")
         else:
-            st.success(f"Found {len(search_results)} results for '{book_name}' book:")
-            for i, result in enumerate(search_results, start=1):
-                st.write(f"Result {i}: {result}")
+            st.error(f"Error fetching data from Open Library API.")
     except Exception as e:
         st.error(f"An error occurred: {e}")
 
