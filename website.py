@@ -1,39 +1,25 @@
 import streamlit as st
-import subprocess
 
-# Define the usernames and passwords for students and administrators
-student_credentials = {'student1': 'password1', 'student2': 'password2'}
-admin_credentials = {'admin1': 'adminpassword1', 'admin2': 'adminpassword2'}
+# Define the external link
+url_resources = "https://congnixresources.streamlit.app/"
 
-# Create a function to validate credentials
-def validate_credentials(credentials, input_username, input_password):
-    if input_username in credentials and credentials[input_username] == input_password:
-        return True
-    return False
+# Create the Streamlit web app
+st.set_page_config(
+    page_title="Simple Website",
+    page_icon=":link:",
+    layout="wide"
+)
 
-# Define the main application
-def main():
-    st.title("Login Page")
-    
-    # Add a select box to choose user type (Student or Administrator)
-    user_type = st.selectbox("Select User Type", ["Student", "Administrator"])
-    
-    # Add text input boxes for username and password
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
-    
-    # Check if the login button is clicked
-    if st.button("Login"):
-        if user_type == "Student" and validate_credentials(student_credentials, username, password):
-            st.success("Logged in as a Student")
-            # Launch the student dashboard app
-            subprocess.run(["streamlit", "run", "C:\Users\archa\.vscode\NYAS\student.py"])
-        elif user_type == "Administrator" and validate_credentials(admin_credentials, username, password):
-            st.success("Logged in as an Administrator")
-            # Launch the administrator dashboard app
-            subprocess.run(["streamlit", "run", "admin_dashboard.py"])
-        else:
-            st.error("Incorrect username or password")
+# Add content to the website
+st.title("Cognix")
 
-if __name__ == '__main__':
-    main()
+
+st.sidebar.link_button("Student resources", url_resources)
+
+
+# Add more content as needed
+st.write("""Hello student I am Cognix your ai mentor.How may I help you today.\n
+         1.For student resources click on student resoruces\n
+         2.For notes Click on Notes\n
+         3.For submission of assignment and assignment grading click on assignment\n
+         4.For online classroom click on online classroom """)
