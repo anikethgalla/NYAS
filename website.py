@@ -31,6 +31,25 @@ st.write("""Hello student I am Cognix your ai mentor.How may I help you today.\n
          3.For submission of assignment and assignment grading click on assignment\n
          4.For online classroom click on online classroom """)
 
+data = {
+    'Month': ['January', 'February', 'March', 'April', 'May'],
+    'Marks': [85, 90, 78, 92, 88]
+}
+
+df = pd.DataFrame(data)
+
+# Display the DataFrame as a table
+st.write("Your progress")
+
+
+# Create a line chart
+chart = st.line_chart(
+    df.set_index('Month')['Marks'],
+    use_container_width=True,  # Use the full container width
+    width=300,  # Set the chart width
+    height=200  # Set the chart height
+)
+
 # Create a sample timetable DataFrame
 data = {
     'Time': ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM'],
