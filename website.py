@@ -6,6 +6,7 @@ url_resources = "https://congnixresources.streamlit.app/"
 url_notes = "https://congnixnotes.streamlit.app/"
 url_physicslab="https://www.physicsclassroom.com/"
 url_chemsirtlab="http://chemcollective.org/"
+url_onlineclassrooms="https://cognixclassrooms.streamlit.app/"
 # Create the Streamlit web app
 st.set_page_config(
     page_title="Simple Website",
@@ -21,6 +22,7 @@ st.sidebar.link_button("Student resources", url_resources)
 st.sidebar.link_button("Notes", url_notes)
 st.sidebar.link_button("Physics lab", url_physicslab)
 st.sidebar.link_button("Chemistry lab", url_chemsirtlab)
+st.sidebar.link_button("Online Classrooms", url_onlineclassrooms)
 
 # Add more content as needed
 st.write("""Hello student I am Cognix your ai mentor.How may I help you today.\n
