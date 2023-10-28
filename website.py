@@ -9,7 +9,7 @@ url_chemsirtlab="http://chemcollective.org/"
 url_onlineclassrooms="https://cognixclassrooms.streamlit.app/"
 # Create the Streamlit web app
 st.set_page_config(
-    page_title="Simple Website",
+    page_title="Cognix",
     page_icon=":link:",
     layout="wide"
 )
@@ -23,6 +23,7 @@ st.sidebar.link_button("Notes", url_notes)
 st.sidebar.link_button("Physics lab", url_physicslab)
 st.sidebar.link_button("Chemistry lab", url_chemsirtlab)
 st.sidebar.link_button("Online Classrooms", url_onlineclassrooms)
+st.sidebar.button("Assignment submission")
 
 # Add more content as needed
 st.write("""Hello student I am Cognix your ai mentor.How may I help you today.\n
@@ -65,3 +66,11 @@ df = pd.DataFrame(data)
 st.title("Your timetable")
 # Display the timetable using st.table
 st.table(df)
+
+st.title("Your Assignments")
+data1 = {
+    'Assignment Name': ['AP calculus Assingment', 'AP chemistry assignment', 'AP world history Assingment'],
+    'Submission Date': ['2023-10-01', '2023-10-05', '2023-10-10']
+}
+df1 = pd.DataFrame(data1)
+st.table(df1)
