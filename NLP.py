@@ -1,28 +1,20 @@
 import streamlit as st
-import nltk
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from textblob import TextBlob
 import language_tool_python
-from gensim.models import Word2Vec
 from docx import Document
 import io
-import re
-
-nltk.download('vader_lexicon')
-nltk.download('punkt')
 
 # Initialize NLP models
-sia = SentimentIntensityAnalyzer()
 tool = language_tool_python.LanguageTool('en-US')
 
 # Function to count words
 def count_words(text):
-    words = nltk.word_tokenize(text)
+    words = text.split()  # Splitting text by space to count words
     return len(words)
 
 # Function to count sentences
 def count_sentences(text):
-    sentences = nltk.sent_tokenize(text)
+    sentences = text.split('.')  # Assuming a period marks the end of a sentence
     return len(sentences)
 
 # Function to check grammar errors
@@ -32,12 +24,12 @@ def check_grammar(text):
 
 # Function to analyze sentiment
 def analyze_sentiment(text):
-    sentiment = sia.polarity_scores(text)
+    sentiment = TextBlob(text).sentiment
     return sentiment
 
 # Function to calculate average word length
 def average_word_length(text):
-    words = nltk.word_tokenize(text)
+    words = text.split()  # Splitting text by space to count words
     total_word_length = sum(len(word) for word in words)
     return total_word_length / len(words) if len(words) > 0 else 0
 
@@ -73,21 +65,21 @@ if st.button("Submit"):
         example_text = "This is a sample essay for plagiarism detection."
         plagiarism_result = "No plagiarism detected"  # Placeholder
 
-        grade = calculate_grade(num_words, grammar_errors, sentiment['compound'])
+        grade = calculate_grade(num_words, grammar_errors, sentiment[1])
 
         st.subheader("Analysis Results:")
         st.write(f"Number of Words: {num_words}")
         st.write(f"Number of Sentences: {num_sentences}")
         st.write(f"Grammar Errors: {grammar_errors}")
-        st.write(f"Sentiment Analysis: {sentiment['compound']:.2f} (Negative: {sentiment['neg']:.2f}, Neutral: {sentiment['neu']:.2f}, Positive: {sentiment['pos']:.2f})")
+        st.write(f"Sentiment Analysis: {sentiment[1]:.2f} (Polarity: {sentiment[0]:.2f}, Subjectivity: {sentiment[1]:.2f})")
         st.write(f"Average Word Length: {avg_word_length:.2f}")
 
         st.subheader("Feedback:")
         if grammar_errors > 0:
             st.warning("Grammar issues detected. Consider proofreading your essay.")
-        if sentiment['compound'] < -0.2:
+        if sentiment[0] < -0.2:
             st.warning("Your assignment needs to be worked on.")
-        elif sentiment['compound'] > 0.2:
+        elif sentiment[0] > 0.2:
             st.success("The assignment is pretty great.")
         else:
             st.info("The sentiment of your essay is neutral.")
@@ -102,4 +94,4 @@ if st.button("Submit"):
 st.markdown("### Instructions:")
 st.write("1. Upload the student's essay or assignment using the file uploader above.")
 st.write("2. Click the 'Submit' button to get feedback on the essay's word count, sentence count, grammar errors, sentiment, average word length, plagiarism, and grade.")
-st.write("3. Review the feedback provided to improve the essay.")
+st.write("3. Review the feedback provided to improve the essay")
