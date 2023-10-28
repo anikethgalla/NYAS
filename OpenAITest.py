@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # Load credentials from environment variables
 load_dotenv()
 os.environ['OPENAI_ORG'] = 'org-mGxm1ZfQSxaY8CvQ440SIR0Q'
-os.environ['OPENAI_API_KEY'] = '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'
+os.environ['OPENAI_API_KEY'] = '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'
 
 # Create a dictionary of standardized tests
 standardized_tests = {
